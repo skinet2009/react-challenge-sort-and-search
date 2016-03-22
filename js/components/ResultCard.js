@@ -5,7 +5,7 @@ var ResultCard = React.createClass({
 
     render() {
         var card = this.props.card;
-        var imageSrc = `../images/${card.image}.svg`;
+        var imageSrc = `./images/${card.image}.svg`;
 
         return(
             <div className="col-sm-4 col-md-3 col-lg-2">

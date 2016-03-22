@@ -1,17 +1,40 @@
 import React from 'react';
 import ResultItem from './ResultItem';
+import AppStore from '../stores/AppStore';
+import AppAction from '../actions/App';
+
+function getState() {
+    return {
+        list: AppStore.getList(),
+        selected: AppStore.getSelected(),
+    };
+}
 
 var ResultList = React.createClass({
     displayName: 'ResultList',
 
-    onClick(id) {
-        this.props.onSelect(id);
+    getInitialState() {
+        return getState();
+    },
+
+    componentDidMount() {
+        AppStore.addChangeListener(this._onChange);
+    },
+
+    _onClick(id) {
+        AppAction.changeActive(id);
+    },
+
+    _onChange: function() {
+        this.setState(getState());
     },
 
     render() {
-        var renderedList = this.props.list.map((item) => {
+        var list = this.state.list;
+
+        var renderedList = list.map((item, i) => {
             return(
-                <ResultItem click={this.onClick.bind(null, item.id)} card={item}/>
+                <ResultItem onClick={this._onClick} card={item} key={i}/>
             );
         });
 

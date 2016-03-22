@@ -3,6 +3,7 @@ import SearchBar from './SearchBar';
 import ToolBar from './ToolBar';
 import ResultList from './ResultList';
 import ResultCard from './ResultCard';
+import AppActions from '../actions/App';
 
 var App = React.createClass({
     displayName: 'App',
@@ -14,39 +15,10 @@ var App = React.createClass({
         };
     },
 
-    componentDidMount() {
-        var list;
-        var selected;
-
-        fetch('./data.json').
-            then((response) => {
-                response.text().
-                    then((responseText) => {
-                        list = JSON.parse(responseText);
-                        selected = list[0];
-
-                        this.setState({
-                            list,
-                            selected,
-                        });
-                    });
-            }, (error) => {
-                console.log(error);
-            });
-    },
-
     sorted() {
-
     },
 
     search() {
-
-    },
-
-    selectItem(id) {
-        this.setState({
-            selected: this.state.list[id],
-        });
     },
 
     render() {
@@ -57,12 +29,16 @@ var App = React.createClass({
                 <ToolBar sorted={this.sorted} />
 
                 <div className="row">
-                    <ResultCard card={this.state.selected}/>
-                    <ResultList list={this.state.list} onSelect={this.selectItem}/>
+                    <ResultCard />
+                    <ResultList />
                 </div>
 
             </div>
         );
+    },
+
+    _onChange: function() {
+        this.setState(getTodoState());
     },
 });
 

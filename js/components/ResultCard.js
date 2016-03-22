@@ -1,10 +1,31 @@
 import React from 'react';
+import AppStore from '../stores/AppStore';
+import AppAction from '../actions/App';
+
+
+function getState() {
+    return {
+        selected: AppStore.getSelected(),
+    };
+}
 
 var ResultCard = React.createClass({
     displayName: 'ResultCard',
 
+    getInitialState() {
+        return getState();
+    },
+
+    componentDidMount() {
+        AppStore.addChangeListener(this._onChange);
+    },
+
+    _onChange: function() {
+        this.setState(getState());
+    },
+
     render() {
-        var card = this.props.card;
+        var card = this.state.selected;
         var imageSrc = `./images/${card.image}.svg`;
 
         return(

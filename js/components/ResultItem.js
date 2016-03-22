@@ -5,7 +5,7 @@ var ResultItem = React.createClass({
 
     render() {
         var item = this.props.card;
-        var imageSrc = `../images/${item.image}.svg`;
+        var imageSrc = `./images/${item.image}.svg`;
 
         return(
             <tr onClick={this.props.click}>

@@ -25,8 +25,22 @@ var ResultCard = React.createClass({
     },
 
     render() {
-        var card = this.state.selected;
-        var imageSrc = `./images/${card.image}.svg`;
+        var card;
+        var imageSrc;
+
+        if (this.state.selected === 'none') {
+            card = {
+                name: this.state.selected,
+                age: this.state.selected,
+                image: this.state.selected,
+                phone: this.state.selected,
+                phrase: this.state.selected,
+            };
+            imageSrc = './images/react.svg';
+        } else {
+            card = this.state.selected;
+            imageSrc = `./images/${card.image}.svg`;
+        }
 
         return(
             <div className="col-sm-4 col-md-3 col-lg-2">

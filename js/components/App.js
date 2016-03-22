@@ -36,10 +36,6 @@ var App = React.createClass({
             </div>
         );
     },
-
-    _onChange: function() {
-        this.setState(getTodoState());
-    },
 });
 
 export default App;

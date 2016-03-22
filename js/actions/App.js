@@ -8,6 +8,13 @@ var AppActions = {
             id: id,
         });
     },
+
+    changeText(text) {
+        Dispatcher.dispatch({
+            actionType: AppConstants.CHANGE_TEXT,
+            text: text,
+        });
+    },
 };
 
 export default AppActions;

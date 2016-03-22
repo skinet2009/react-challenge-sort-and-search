@@ -8,10 +8,28 @@ var CHANGE_EVENT = 'change';
 var _data = {
     list: stabData,
     selected: stabData[0],
+    searchText: '',
 };
 
 function changeActive(id) {
     _data.selected = _data.list[id];
+}
+
+function changeText(text) {
+    var newList = [];
+
+    _data.searchText = text.trim();
+
+    stabData.findIndex((elem, i) => {
+        // elem.name elem.phrase
+        if (elem.name.indexOf(_data.searchText) >= 0 ||
+            elem.phrase.indexOf(_data.searchText) >= 0) {
+                newList.push(elem);
+            }
+    });
+
+    _data.list = newList;
+    _data.selected = newList[0] || 'none';
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
@@ -21,6 +39,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
     getSelected() {
         return _data.selected;
+    },
+
+    getSearchText() {
+        return _data.searchText;
     },
 
     emitChange() {
@@ -40,6 +62,10 @@ Dispatcher.register((action) => {
     switch (action.actionType) {
         case AppConstants.CHANGE_ACTIVE:
             changeActive(action.id);
+            AppStore.emitChange();
+            break;
+        case AppConstants.CHANGE_TEXT:
+            changeText(action.text);
             AppStore.emitChange();
             break;
         default:

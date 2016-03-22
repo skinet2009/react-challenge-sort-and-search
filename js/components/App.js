@@ -58,7 +58,7 @@ var App = React.createClass({
 
                 <div className="row">
                     <ResultCard card={this.state.selected}/>
-                    <ResultList list={this.state.list} select={this.selectItem}/>
+                    <ResultList list={this.state.list} onSelect={this.selectItem}/>
                 </div>
 
             </div>

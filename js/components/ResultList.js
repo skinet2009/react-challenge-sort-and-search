@@ -5,7 +5,7 @@ var ResultList = React.createClass({
     displayName: 'ResultList',
 
     onClick(id) {
-        this.props.select(id);
+        this.props.onSelect(id);
     },
 
     render() {

@@ -5,14 +5,22 @@ var AppActions = {
     changeActive(id) {
         Dispatcher.dispatch({
             actionType: AppConstants.CHANGE_ACTIVE,
-            id: id,
+            id,
         });
     },
 
     changeText(text) {
         Dispatcher.dispatch({
             actionType: AppConstants.CHANGE_TEXT,
-            text: text,
+            text,
+        });
+    },
+
+    sorted(type, route) {
+        Dispatcher.dispatch({
+            actionType: AppConstants.SORTED,
+            type,
+            route,
         });
     },
 };

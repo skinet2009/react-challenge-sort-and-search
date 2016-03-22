@@ -33,8 +33,14 @@ var ResultList = React.createClass({
         var list = this.state.list;
 
         var renderedList = list.map((item, i) => {
+            let selectClass = '';
+
+            if (this.state.selected === item) {
+                selectClass = 'success';
+            }
+
             return(
-                <ResultItem onClick={this._onClick} card={item} key={i}/>
+                <ResultItem onClick={this._onClick} card={item} key={i} select={selectClass} />
             );
         });
 

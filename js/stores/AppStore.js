@@ -9,6 +9,10 @@ var _data = {
     list: stabData,
     selected: stabData[0],
     searchText: '',
+    sorting: {
+        field: '',
+        direction: '',
+    },
 };
 
 function changeActive(id) {
@@ -21,7 +25,6 @@ function changeText(text) {
     _data.searchText = text.trim();
 
     stabData.findIndex((elem, i) => {
-        // elem.name elem.phrase
         if (elem.name.indexOf(_data.searchText) >= 0 ||
             elem.phrase.indexOf(_data.searchText) >= 0) {
                 newList.push(elem);
@@ -32,9 +35,50 @@ function changeText(text) {
     _data.selected = newList[0] || 'none';
 }
 
+function sorted(type, route) {
+    var list = _data.list;
+
+    _data.sorting.field = type.trim();
+    _data.sorting.direction = route;
+
+    list.sort((a, b) => {
+        if (route === 'asc') {
+            if (a[_data.sorting.field] > b[_data.sorting.field]) {
+                return 1;
+            }
+            if (a[_data.sorting.field] < b[_data.sorting.field]) {
+                return -1;
+            }
+            // a должно быть равным b
+            return 0;
+        }
+
+        if (route === 'desc') {
+            if (a[_data.sorting.field] > b[_data.sorting.field]) {
+                return -1;
+            }
+            if (a[_data.sorting.field] < b[_data.sorting.field]) {
+                return 1;
+            }
+            // a должно быть равным b
+            return 0;
+        }
+    });
+
+    _data.list = list;
+}
+
 var AppStore = assign({}, EventEmitter.prototype, {
     getList() {
         return _data.list;
+    },
+
+    getFieldSort() {
+        return _data.sorting.field;
+    },
+
+    getDirectionSort() {
+        return _data.sorting.direction;
     },
 
     getSelected() {
@@ -66,6 +110,10 @@ Dispatcher.register((action) => {
             break;
         case AppConstants.CHANGE_TEXT:
             changeText(action.text);
+            AppStore.emitChange();
+            break;
+        case AppConstants.SORTED:
+            sorted(action.type, action.route);
             AppStore.emitChange();
             break;
         default:

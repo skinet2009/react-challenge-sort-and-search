@@ -1,4 +1,5 @@
 import React from 'react';
+import AppStore from '../stores/AppStore';
 
 var ResultItem = React.createClass({
     displayName: 'ResultItem',
@@ -12,7 +13,7 @@ var ResultItem = React.createClass({
         var imageSrc = `./images/${item.image}.svg`;
 
         return(
-            <tr onClick={this._handleClick}>
+            <tr onClick={this._handleClick} className={this.props.select}>
                 <th>
                     <img className="user-image" src={imageSrc}/>
                 </th>

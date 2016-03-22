@@ -15,12 +15,6 @@ var App = React.createClass({
         };
     },
 
-    sorted() {
-    },
-
-    search() {
-    },
-
     render() {
         return (
             <div className="app container-fluid">

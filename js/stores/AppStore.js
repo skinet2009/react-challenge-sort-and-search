@@ -13,20 +13,28 @@ var _data = {
         field: '',
         direction: '',
     },
+    className: '',
 };
 
 function changeActive(id) {
-    _data.selected = _data.list[id];
+    _data.list.forEach((item) => {
+        if (item.id === id) {
+            _data.selected = item;
+        }
+    });
 }
 
 function changeText(text) {
     var newList = [];
 
-    _data.searchText = text.trim();
+    _data.searchText = text.trim().toLowerCase();
 
     stabData.findIndex((elem, i) => {
-        if (elem.name.indexOf(_data.searchText) >= 0 ||
-            elem.phrase.indexOf(_data.searchText) >= 0) {
+        let name = elem.name.toLowerCase();
+        let phrase = elem.phrase.toLowerCase();
+
+        if (name.indexOf(_data.searchText) >= 0 ||
+            phrase.indexOf(_data.searchText) >= 0) {
                 newList.push(elem);
             }
     });
@@ -37,16 +45,14 @@ function changeText(text) {
 
 function sorted(type, route) {
     var list = _data.list;
+    var fieldSort = type.trim();
 
-    _data.sorting.field = type.trim();
-    _data.sorting.direction = route;
-
-    list.sort((a, b) => {
+    _data.list.sort((a, b) => {
         if (route === 'asc') {
-            if (a[_data.sorting.field] > b[_data.sorting.field]) {
+            if (a[fieldSort] > b[fieldSort]) {
                 return 1;
             }
-            if (a[_data.sorting.field] < b[_data.sorting.field]) {
+            if (a[fieldSort] < b[fieldSort]) {
                 return -1;
             }
             // a должно быть равным b
@@ -54,10 +60,10 @@ function sorted(type, route) {
         }
 
         if (route === 'desc') {
-            if (a[_data.sorting.field] > b[_data.sorting.field]) {
+            if (a[fieldSort] > b[fieldSort]) {
                 return -1;
             }
-            if (a[_data.sorting.field] < b[_data.sorting.field]) {
+            if (a[fieldSort] < b[fieldSort]) {
                 return 1;
             }
             // a должно быть равным b
@@ -65,7 +71,10 @@ function sorted(type, route) {
         }
     });
 
-    _data.list = list;
+    // _data.list = list;
+    _data.sorting.field = fieldSort;
+    _data.sorting.direction = route;
+    // _data.selected = list[0] || 'none';
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
@@ -83,6 +92,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
     getSelected() {
         return _data.selected;
+    },
+
+    getClassName() {
+        return _data.className;
     },
 
     getSearchText() {

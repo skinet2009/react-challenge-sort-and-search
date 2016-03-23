@@ -25,7 +25,7 @@ var SearchBar = React.createClass({
         this.setState(getState());
     },
 
-    handleChange(event) {
+    _handleChange(event) {
         AppAction.changeText(event.target.value);
     },
 
@@ -34,7 +34,7 @@ var SearchBar = React.createClass({
             <div className="row">
                 <div className="col-sm-12">
                     <div className="searchbar form-group">
-                        <input onKeyUp={this.handleChange} type="text" className="form-control" placeholder="Search people by name..." />
+                        <input type="text" onChange={this._handleChange} value={this.state.text} className="form-control" placeholder="Search people by name..." />
                     </div>
                 </div>
             </div>

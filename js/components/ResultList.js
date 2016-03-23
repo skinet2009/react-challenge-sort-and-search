@@ -35,7 +35,7 @@ var ResultList = React.createClass({
         var renderedList = list.map((item, i) => {
             let selectClass = '';
 
-            if (this.state.selected === item) {
+            if (this.state.selected.id === item.id) {
                 selectClass = 'success';
             }
 

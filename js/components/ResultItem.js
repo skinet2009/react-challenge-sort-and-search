@@ -13,9 +13,9 @@ var ResultItem = React.createClass({
         var imageSrc = `./images/${item.image}.svg`;
 
         return(
-            <tr onClick={this._handleClick} className={this.props.select}>
+            <tr onClick={this._handleClick} className={this.props.card.id === AppStore.getSelected().id ? 'success' : ''} >
                 <th>
-                    <img className="user-image" src={imageSrc}/>
+                    <img className="user-image" src={imageSrc} />
                 </th>
                 <th>{item.name}</th>
                 <th>{item.age}</th>

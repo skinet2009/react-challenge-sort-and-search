@@ -45,12 +45,12 @@ var ToolBar = React.createClass({
             <div className="row">
                 <div className="col-sm-12">
                     <div className="toolbar">
-                        <button className="btn btn-default" onClick={this.handleClickSortByName}>
+                        <button className="btn btn-default" onClick={this.handleClickSortByName} >
                             <i className="icon fa fa-sort-alpha-asc"></i>
                             <span> Sort by name</span>
                         </button>
 
-                        <button className="btn btn-default" onClick={this.handleClickSortByAge}>
+                        <button className="btn btn-default" onClick={this.handleClickSortByAge} >
                             <i className="icon fa fa-sort-numeric-desc"></i>
                             <span> Sort by age</span>
                         </button>

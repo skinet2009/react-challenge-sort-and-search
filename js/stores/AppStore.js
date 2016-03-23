@@ -66,8 +66,7 @@ function sorted(type, order) {
         }
     });
 
-    _data.sorting.field = fieldSort;
-    _data.sorting.direction = order;
+    _data.sorting.order = order;
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {

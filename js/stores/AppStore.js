@@ -40,7 +40,7 @@ function changeText(text) {
     });
 
     _data.list = newList;
-    _data.selected = newList[0] || 'none';
+    // _data.selected = newList[0] || 'none';
 }
 
 function sorted(type, route) {

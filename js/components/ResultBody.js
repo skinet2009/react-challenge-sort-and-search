@@ -6,8 +6,6 @@ var ResultBody = React.createClass({
     displayName: 'ResultBody',
 
     render() {
-        console.log(this.props.list);
-
         return(
             <div className="row">
                 <ResultCard />

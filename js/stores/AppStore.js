@@ -8,73 +8,66 @@ var CHANGE_EVENT = 'change';
 var _data = {
     list: stabData,
     selected: stabData[0],
-    searchText: '',
     sorting: {
-        field: '',
-        direction: '',
+        order: '',
     },
-    className: '',
 };
 
 function changeActive(id) {
-    _data.list.forEach((item) => {
-        if (item.id === id) {
-            _data.selected = item;
+    _data.list.forEach((card) => {
+        if (card.id === id) {
+            _data.selected = card;
         }
     });
 }
 
 function changeText(text) {
     var newList = [];
+    var findText = text.trim().toLowerCase();
 
-    _data.searchText = text.trim().toLowerCase();
+    stabData.findIndex((card, i) => {
+        let name = card.name.toLowerCase();
+        let phrase = card.phrase.toLowerCase();
 
-    stabData.findIndex((elem, i) => {
-        let name = elem.name.toLowerCase();
-        let phrase = elem.phrase.toLowerCase();
-
-        if (name.indexOf(_data.searchText) >= 0 ||
-            phrase.indexOf(_data.searchText) >= 0) {
-                newList.push(elem);
+        if (name.indexOf(findText) >= 0 ||
+            phrase.indexOf(findText) >= 0) {
+                newList.push(card);
             }
     });
 
     _data.list = newList;
-    // _data.selected = newList[0] || 'none';
 }
 
-function sorted(type, route) {
+function sorted(type, order) {
     var list = _data.list;
     var fieldSort = type.trim();
 
     _data.list.sort((a, b) => {
-        if (route === 'asc') {
+        if (order === 'asc') {
             if (a[fieldSort] > b[fieldSort]) {
                 return 1;
             }
             if (a[fieldSort] < b[fieldSort]) {
                 return -1;
             }
-            // a должно быть равным b
+
             return 0;
         }
 
-        if (route === 'desc') {
+        if (order === 'desc') {
             if (a[fieldSort] > b[fieldSort]) {
                 return -1;
             }
             if (a[fieldSort] < b[fieldSort]) {
                 return 1;
             }
-            // a должно быть равным b
+
             return 0;
         }
     });
 
-    // _data.list = list;
     _data.sorting.field = fieldSort;
-    _data.sorting.direction = route;
-    // _data.selected = list[0] || 'none';
+    _data.sorting.direction = order;
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
@@ -82,20 +75,12 @@ var AppStore = assign({}, EventEmitter.prototype, {
         return _data.list;
     },
 
-    getFieldSort() {
-        return _data.sorting.field;
-    },
-
-    getDirectionSort() {
-        return _data.sorting.direction;
+    getSortingOrder() {
+        return _data.sorting.order;
     },
 
     getSelected() {
         return _data.selected;
-    },
-
-    getClassName() {
-        return _data.className;
     },
 
     getSearchText() {
@@ -126,7 +111,7 @@ Dispatcher.register((action) => {
             AppStore.emitChange();
             break;
         case AppConstants.SORTED:
-            sorted(action.type, action.route);
+            sorted(action.type, action.order);
             AppStore.emitChange();
             break;
         default:

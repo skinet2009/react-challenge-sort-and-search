@@ -16,11 +16,11 @@ var AppActions = {
         });
     },
 
-    sorted(type, route) {
+    sorted(type, order) {
         Dispatcher.dispatch({
             actionType: AppConstants.SORTED,
             type,
-            route,
+            order,
         });
     },
 };

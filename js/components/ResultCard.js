@@ -3,7 +3,7 @@ import AppStore from '../stores/AppStore';
 import AppAction from '../actions/App';
 
 
-function getState() {
+function _getState() {
     return {
         selected: AppStore.getSelected(),
     };
@@ -13,7 +13,7 @@ var ResultCard = React.createClass({
     displayName: 'ResultCard',
 
     getInitialState() {
-        return getState();
+        return _getState();
     },
 
     componentDidMount() {
@@ -21,7 +21,7 @@ var ResultCard = React.createClass({
     },
 
     _onChange: function() {
-        this.setState(getState());
+        this.setState(_getState());
     },
 
     render() {

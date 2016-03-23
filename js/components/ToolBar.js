@@ -2,10 +2,9 @@ import React from 'react';
 import AppStore from '../stores/AppStore';
 import AppAction from '../actions/App';
 
-function getState() {
+function _getState() {
     return {
-        field: AppStore.getFieldSort(),
-        direction: AppStore.getDirectionSort(),
+        order: AppStore.getSortingOrder(),
     };
 }
 
@@ -13,7 +12,7 @@ var ToolBar = React.createClass({
     displayName: 'ToolBar',
 
     getInitialState() {
-        return getState();
+        return _getState();
     },
 
     componentDidMount() {
@@ -21,23 +20,23 @@ var ToolBar = React.createClass({
     },
 
     _onClick: function() {
-        this.setState(getState());
+        this.setState(_getState());
     },
 
-    toggleDirrection() {
-        if (this.state.direction === 'asc') {
+    _toggleSortingOrder() {
+        if (this.state.order === 'asc') {
             return 'desc';
         }
 
         return 'asc';
     },
 
-    handleClickSortByName() {
-        AppAction.sorted('name', this.toggleDirrection());
+    _handleClickSortByName() {
+        AppAction.sorted('name', this._toggleSortingOrder());
     },
 
-    handleClickSortByAge() {
-        AppAction.sorted('age', this.toggleDirrection());
+    _handleClickSortByAge() {
+        AppAction.sorted('age', this._toggleSortingOrder());
     },
 
     render() {
@@ -45,12 +44,12 @@ var ToolBar = React.createClass({
             <div className="row">
                 <div className="col-sm-12">
                     <div className="toolbar">
-                        <button className="btn btn-default" onClick={this.handleClickSortByName} >
+                        <button className="btn btn-default" onClick={this._handleClickSortByName} >
                             <i className="icon fa fa-sort-alpha-asc"></i>
                             <span> Sort by name</span>
                         </button>
 
-                        <button className="btn btn-default" onClick={this.handleClickSortByAge} >
+                        <button className="btn btn-default" onClick={this._handleClickSortByAge} >
                             <i className="icon fa fa-sort-numeric-desc"></i>
                             <span> Sort by age</span>
                         </button>

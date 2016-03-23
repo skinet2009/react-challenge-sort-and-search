@@ -3,7 +3,7 @@ import ResultItem from './ResultItem';
 import AppStore from '../stores/AppStore';
 import AppAction from '../actions/App';
 
-function getState() {
+function _getState() {
     return {
         list: AppStore.getList(),
         selected: AppStore.getSelected(),
@@ -14,7 +14,7 @@ var ResultList = React.createClass({
     displayName: 'ResultList',
 
     getInitialState() {
-        return getState();
+        return _getState();
     },
 
     componentDidMount() {
@@ -26,21 +26,21 @@ var ResultList = React.createClass({
     },
 
     _onChange: function() {
-        this.setState(getState());
+        this.setState(_getState());
     },
 
     render() {
         var list = this.state.list;
 
-        var renderedList = list.map((item, i) => {
-            let selectClass = '';
+        var renderedList = list.map((card, i) => {
+            let isActive = false;
 
-            if (this.state.selected.id === item.id) {
-                selectClass = 'success';
+            if (this.state.selected.id === card.id) {
+                isActive = true;
             }
 
             return(
-                <ResultItem onClick={this._onClick} card={item} key={i} select={selectClass} />
+                <ResultItem onClick={this._onClick} card={card} key={i} active={isActive} />
             );
         });
 

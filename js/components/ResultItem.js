@@ -1,25 +1,39 @@
 import React from 'react';
-import AppStore from '../stores/AppStore';
 
 var ResultItem = React.createClass({
     displayName: 'ResultItem',
 
+    getInitialState() {
+        return {
+            active: this.props.active,
+        };
+    },
+
     _handleClick() {
         this.props.onClick(this.props.card.id);
+        this.setState({
+            active: !this.state.active,
+        });
+    },
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            active: nextProps.active,
+        });
     },
 
     render() {
-        var item = this.props.card;
-        var imageSrc = `./images/${item.image}.svg`;
+        var card = this.props.card;
+        var imageSrc = `./images/${card.image}.svg`;
 
         return(
-            <tr onClick={this._handleClick} className={this.props.card.id === AppStore.getSelected().id ? 'success' : ''} >
+            <tr onClick={this._handleClick} className={this.state.active ? 'success' : ''} >
                 <th>
                     <img className="user-image" src={imageSrc} />
                 </th>
-                <th>{item.name}</th>
-                <th>{item.age}</th>
-                <th>{item.phone}</th>
+                <th>{card.name}</th>
+                <th>{card.age}</th>
+                <th>{card.phone}</th>
             </tr>
         );
     },

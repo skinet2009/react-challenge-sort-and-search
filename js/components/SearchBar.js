@@ -2,11 +2,11 @@ import React from 'react';
 import AppStore from '../stores/AppStore';
 import AppAction from '../actions/App';
 
-function getState() {
+function _getState() {
     return {
         list: AppStore.getList(),
         selected: AppStore.getSelected(),
-        text: AppStore.getSearchText(),
+        text: '',
     };
 }
 
@@ -14,7 +14,7 @@ var SearchBar = React.createClass({
     displayName: 'SearchBar',
 
     getInitialState() {
-        return getState();
+        return _getState();
     },
 
     componentDidMount() {
@@ -22,11 +22,16 @@ var SearchBar = React.createClass({
     },
 
     _onChange: function() {
-        this.setState(getState());
+        this.setState({
+            text: this.state.text,
+        });
     },
 
     _handleChange(event) {
         AppAction.changeText(event.target.value);
+        this.setState({
+            text: event.target.value,
+        });
     },
 
     render() {
